@@ -5,7 +5,7 @@ import React from 'react'
 
 function Header() {
   return (
-    <div className=' bg-[#e8e8e8] w-full px-[30px] py-[10px] border-b-[1px] border-[#999]'>
+    <div className=' bg-[#e8e8e8] w-full px-[30px] py-[10px] border-b-[1px] border-[#999] fixed z-99'>
         <div className='flex justify-between  items-center max-w-[1300px] mx-auto'>
             <Link href={'/'} className='flex gap-[10px] items-center'>
                 <Image src={'/header_logo.webp'} alt='header logo' width={40} height={100} />
