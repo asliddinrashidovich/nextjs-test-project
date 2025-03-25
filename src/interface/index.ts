@@ -4,6 +4,7 @@ export interface ProductTypes  {
     description: string
     image: string
     price: number
+    liked: boolean
     rating: {
         rate: number
         count: number

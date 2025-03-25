@@ -1,9 +1,11 @@
 import { cartReducer } from "@/reducers/cartSlice";
+import { likeAdder } from "@/reducers/likedSlice";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({
     reducer: {
-        cart: cartReducer
+        cart: cartReducer,
+        liked: likeAdder,
     }
     // devTools: process.env.NODE_ENV !== 'production'
 })

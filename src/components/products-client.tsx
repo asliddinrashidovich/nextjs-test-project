@@ -2,38 +2,54 @@
 
 import { ProductTypes } from '@/interface'
 import { addToCart } from '@/reducers/cartSlice'
+import {  toggleLike } from '@/reducers/likedSlice'
 import { AppDispatch } from '@/store/store'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
+// import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 function ProductsClientSide({products}: {products: ProductTypes[]}) {
     const router = useRouter()
-    const [like, setLike] = useState(false);
     const dispatch = useDispatch<AppDispatch>()
+    const [productsAll, setProductsAll] = useState(products)
+    
+    useEffect(() => {
+        const updatedProducts = productsAll.map((product: ProductTypes) => ({
+            ...product,
+            liked: false, 
+        }));
+        setProductsAll(updatedProducts);
+    }, [products])
 
-    function handleLike( e: React.MouseEvent<HTMLButtonElement>) {
+    function handleLike(product: number, e: React.MouseEvent<HTMLButtonElement>) {
         e.stopPropagation()
-        console.log('liked')
-        setLike(prev => prev ? false: true)
+        
+        setProductsAll(prev =>
+            prev.map(productItem =>
+              productItem.id === product ? { ...productItem, liked: !productItem.liked } : productItem
+            )
+        );
     }
+
     function handleAdd(product: ProductTypes, e: React.MouseEvent<HTMLButtonElement>) {
         e.stopPropagation();
         dispatch(addToCart(product))
         console.log('likeee', product);
     }
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-[20px] mb-[40px] px-[40px]">
-    {products.map(item => (
+    {productsAll.map(item => (
         <div key={item.id} onClick={() => router.push(`products/${item.id}`)}  className='border-[1px] relative rounded-[5px] p-[20px] '>
             <div className='h-[200px] w-full flex justify-center py-[20px] items-center mb-[10px]'>
                 <Image src={item.image} alt={item.title} width={130} height={100}/>
-                <button className='cursor-pointer absolute w-[full] px-[5px] rounded-bl-[5px] h-[20px] flex justify-center items-center top-4 right-2' onClick={handleLike}>
-                    {!like && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                <button className='cursor-pointer absolute w-[full] px-[5px] rounded-bl-[5px] h-[20px] flex justify-center items-center top-4 right-2' onClick={(e) => handleLike(item.id, e)}>
+                    {!item.liked && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                     </svg>}
-                    {like && <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+                    {item.liked && <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                         <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                     </svg>}
                 </button>
