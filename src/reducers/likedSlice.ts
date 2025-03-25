@@ -2,45 +2,30 @@
 
 import { ProductTypes } from "@/interface";
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 
-// **Mahsulot turi**
-interface Product {
-  id: number;
-  title: string;
-  image: string;
-  liked?: boolean; // Like holati
+
+
+interface LikedState {
+  items: ProductTypes[];
 }
 
-// **API orqali Like holatini yangilash**
-export const toggleLike = createAsyncThunk(
-  "cart/toggleLike",
-  async (product: ProductTypes) => {
-    const updatedProduct = { ...product, liked: !product.liked };
-    await axios.put(`https://fakestoreapi.com/products/${product.id}`, updatedProduct);
-    return updatedProduct; // ✅ Yangilangan ma'lumot Redux'ga qaytadi
-  }
-);
+export const initialState: LikedState = {
+  items: [],
+};
+
 
 export const likedSlice = createSlice({
   name: "liked",
-  initialState: {
-    items: [] as Product[],
-  },
+  initialState,
   reducers: {
-    setProducts: (state, action: PayloadAction<ProductTypes[]>) => {
-      state.items = action.payload;
+    addToLiked: (state, action: PayloadAction<ProductTypes>) => {
+      state.items.push(action.payload);
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(toggleLike.fulfilled, (state, action: PayloadAction<Product>) => {
-      const index = state.items.findIndex((item) => item.id === action.payload.id);
-      if (index !== -1) {
-        state.items[index].liked = action.payload.liked;
-      }
-    });
+    removeFromLiked: (state, action: PayloadAction<number>) => {
+      state.items = state.items.filter((item) => item.id !== action.payload);
+    },
   },
 });
 
-export const { setProducts } = likedSlice.actions;
+export const { addToLiked, removeFromLiked } = likedSlice.actions;
 export const likeAdder = likedSlice.reducer

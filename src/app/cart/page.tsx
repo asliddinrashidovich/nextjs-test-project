@@ -9,6 +9,7 @@ import { useSelector } from "react-redux"
 function MyProducts() {
     const dispatch = useDispatch<AppDispatch>()
     const cartItems = useSelector((state: RootState) => state.cart.items)
+    
     let total:number = 0;
     cartItems.forEach(i => {
         total += i.price
@@ -42,14 +43,6 @@ function MyProducts() {
                 ))}
             </div>
             <div className="w-[30%] p-[20px] border-[1px] border-[#999] rounded-[6px]">
-                {/* <div className="flex justify-between">
-                    <h3 className="font-[400] mb-[3px]">Subtotal</h3>
-                    <span>$2323</span>
-                </div>
-                <div className="flex justify-between">
-                    <h3 className="font-[400] mb-[5px]">Shipping</h3>
-                    <span>$23</span>
-                </div> <hr className="my-[10px]"/> */}
                 <div className="flex justify-between mb-[50px]">
                     <h3 className="font-[700]">Total</h3>
                     <span className="font-[700]">${total.toFixed(2)}</span>
