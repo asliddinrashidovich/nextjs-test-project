@@ -9,20 +9,32 @@ import Image from 'next/image';
 import { addToCart } from '@/reducers/cartSlice';
 import { useRouter } from 'next/navigation';
 import { removeFromLiked } from '@/reducers/likedSlice';
+import { useEffect, useState } from 'react';
 
 
 function LikedProducts() {
     const dispatch = useDispatch<AppDispatch>()
     const likedItems = useSelector((state: RootState) => state.liked.items)
+    const productFilterName =  useSelector((state: RootState) => state.products.items)
     const router = useRouter()
    
-    // const [productsAll, setProductsAll] = useState(likedItems)
+    const [productsAllLiked, setProductsAllLiked] = useState(likedItems)
         
     function handleLike(product: number, e: React.MouseEvent<HTMLButtonElement>) {
         e.stopPropagation()
         
         dispatch(removeFromLiked(product))
     }
+
+    useEffect(() => {
+      setProductsAllLiked((prev) =>
+            prev.map((productItem) =>
+                productItem.category.slice(0, 3).includes(productFilterName)
+                    ? { ...productItem, filter: true }
+                    : { ...productItem, filter: false }
+            )
+        );
+    }, [productFilterName]); 
     
     function handleAdd(product: ProductTypes, e: React.MouseEvent<HTMLButtonElement>) {
         e.stopPropagation();
@@ -34,7 +46,7 @@ function LikedProducts() {
     <div className='min-h-[95vh]'>
       <h2 className="text-start text-[30px]  pt-[80px] pl-[30px] font-[600] mb-[20px]">Liked Products</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-[20px] mb-[40px] px-[40px] ">
-          {likedItems.map(item => (
+          {productsAllLiked.map(item => item.filter && (
               <div key={item.id} onClick={() => router.push(`products/${item.id}`)}  className='border-[1px] relative rounded-[5px] p-[20px] '>
                   <div className='h-[200px] w-full flex justify-center py-[20px] items-center mb-[10px]'>
                       <Image src={item.image} alt={item.title} width={130} height={100}/>

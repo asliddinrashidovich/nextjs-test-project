@@ -7,7 +7,7 @@ async function Homepage() {
   return (
     <div className='relative'>
       <CategoriesFilter/>
-      <div className='w-[calc(100%-200px)] ml-auto'> 
+      <div className='w-[calc(100%-200px)] min-h-[94vh] ml-auto'> 
         <Products/>
       </div>
     </div>
