@@ -1,6 +1,5 @@
 import CategoriesFilter from "@/components/filter"
 import LikedProducts from "@/components/liked-products"
-import Products from "@/components/products"
 
 function LikedPage() {
   return (

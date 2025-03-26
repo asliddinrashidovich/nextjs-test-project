@@ -1,7 +1,7 @@
 "use client"; 
 
 import { ProductTypes } from "@/interface";
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 
@@ -19,7 +19,12 @@ export const likedSlice = createSlice({
   initialState,
   reducers: {
     addToLiked: (state, action: PayloadAction<ProductTypes>) => {
-      state.items.push(action.payload);
+      const existsIndex = state.items.findIndex((item) => item.id === action.payload.id);
+      if (existsIndex !== -1) {
+        state.items.splice(existsIndex, 1); // Mahsulotni o‘chirib tashlaydi
+      } else {
+        state.items.push(action.payload); // Yangi mahsulot qo‘shadi
+      }
     },
     removeFromLiked: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);

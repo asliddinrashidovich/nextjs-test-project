@@ -9,7 +9,7 @@ import { useSelector } from "react-redux"
 function MyProducts() {
     const dispatch = useDispatch<AppDispatch>()
     const cartItems = useSelector((state: RootState) => state.cart.items)
-    
+
     let total:number = 0;
     cartItems.forEach(i => {
         total += i.price
@@ -33,8 +33,8 @@ function MyProducts() {
                             <div className="flex justify-between items-center">
                                 <p className=" font-[600]">${item.price}</p>
                                 <div onClick={() => handleDelete(item.id)} className="bg-[#888] text-white rounded-[3px] cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 ">
+                                        <path strokeLinecap="round"  strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                                     </svg>
                                 </div>
                             </div>

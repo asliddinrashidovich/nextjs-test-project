@@ -17,7 +17,10 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<ProductTypes>) => {
-      state.items.push(action.payload);
+      const existsIndex = state.items.some((item) => item.id === action.payload.id);
+      if (!existsIndex) {
+        state.items.push(action.payload);
+      } 
     },
     removeFromCart: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
