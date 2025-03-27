@@ -18,12 +18,12 @@ function MyProducts() {
         dispatch(removeFromCart(id))
     }
   return (
-    <div className="max-w-[1000px] mx-auto px-[30px]  pt-[80px] min-h-[100vh]">
+    <div className="max-w-[1000px] mx-auto px-[30px]  py-[80px] min-h-[100vh]">
         <h1 className="text-center text-[30px] font-[600] mb-[20px]">Cart items</h1>
-        <div className="flex gap-[20px]">
-            <div className="w-[70%] ">
+        <div className="flex md:flex-row flex-col gap-[20px]">
+            <div className="w-full md:w-[70%] ">
                 {cartItems.map(item => (
-                    <div key={item.id} className="p-[20px] flex gap-[20px] border-[1px] border-[#999] rounded-[6px] mb-[15px]">
+                    <div key={item.id} className="p-[20px] flex md:flex-row flex-col gap-[20px] border-[1px] border-[#999] rounded-[6px] mb-[15px]">
                         <div className="min-w-[150px] max-x-[150px] flex justify-center" >
                             <Image src={item.image} alt={item.title} style={{objectFit: 'contain'}} width={100} height={100}/>
                         </div>
@@ -42,7 +42,7 @@ function MyProducts() {
                     </div>
                 ))}
             </div>
-            <div className="w-[30%] p-[20px] border-[1px] border-[#999] rounded-[6px]">
+            <div className="w-full md:w-[30%] p-[20px] border-[1px] border-[#999] rounded-[6px]">
                 <div className="flex justify-between mb-[50px]">
                     <h3 className="font-[700]">Total</h3>
                     <span className="font-[700]">${total.toFixed(2)}</span>

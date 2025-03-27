@@ -45,7 +45,7 @@ function LikedProducts() {
   return (
     <div className='min-h-[95vh]'>
       <h2 className="text-start text-[30px]  pt-[80px] pl-[30px] font-[600] mb-[20px]">Liked Products</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-[20px] mb-[40px] px-[40px] ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[20px] mb-[40px] px-[40px] ">
           {productsAllLiked.map(item => item.filter && (
               <div key={item.id} onClick={() => router.push(`products/${item.id}`)}  className='border-[1px] relative rounded-[5px] p-[20px] '>
                   <div className='h-[200px] w-full flex justify-center py-[20px] items-center mb-[10px]'>

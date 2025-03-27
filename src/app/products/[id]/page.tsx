@@ -15,8 +15,8 @@ async function ProductDetails({params}: {params: {id: string}}) {
   return (
     <div className='max-w-[1300px] mx-auto px-[30px]  pt-[100px] min-h-[100vh]'>
         <Link href={'/'} className='py-[10px] px-[15px] bg-[#e8e8e8] cursor-pointer rounded-[5px]'>Back to products</Link>
-        <div className='w-full py-[40px] px-[40px] gap-[40px] flex bg-[#fff] border-[1px] border-[#999] rounded-[10px] my-[30px]'>
-            <div className='min-w-[30%] max-w-[40%] px-[30px] overflow-hidden flex justify-center'>
+        <div className='w-full py-[40px] px-[40px] gap-[40px] flex-col md:flex-row flex bg-[#fff] border-[1px] border-[#999] rounded-[10px] my-[30px]'>
+            <div className='w-full  md:min-w-[30%] md:max-w-[40%] px-[60px] md:px-[30px] overflow-hidden flex justify-center'>
                 <Image src={product.image} alt={product.title} style={{objectFit: 'contain'}} width={1500} height={1200}/>
             </div>
             <div>
