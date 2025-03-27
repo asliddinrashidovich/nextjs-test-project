@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const getProduct = async (id:string) => {
-    const {data} = await axios.get(`https://fakestoreapi.com/products/${id}`)
+    const {data} = await axios.get(`https://67e38f432ae442db76d08ec2.mockapi.io/a-store-products/${id}`)
     return data
 }
 

@@ -1,4 +1,3 @@
-import { addNewProduct } from "@/reducers/addSlice";
 import { cartReducer } from "@/reducers/cartSlice";
 import { likeAdder } from "@/reducers/likedSlice";
 import { productsSlice } from "@/reducers/productsSlice";
@@ -9,9 +8,7 @@ export const store = configureStore({
         cart: cartReducer,
         liked: likeAdder,
         products: productsSlice,
-        add: addNewProduct
     }
-    // devTools: process.env.NODE_ENV !== 'production'
 })
 
 export type RootState = ReturnType<typeof store.getState>;

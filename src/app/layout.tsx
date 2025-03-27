@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { ReduxProvider } from "@/components/redux-provider";
+import NProgressProvider from "@/components/nprogress";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <body  className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
          <ReduxProvider>
+            <NProgressProvider />
             <Header/>
             {children}
             <Footer/>

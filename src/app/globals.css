@@ -1,6 +1,10 @@
 @import "tailwindcss";
+@import 'nprogress/nprogress.css';
 
 .active {
     background-color: #666;
     color: #fff;
+}
+#nprogress .spinner {
+    display: none !important;
 }

@@ -5,48 +5,47 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
 import { useSelector } from 'react-redux';
 import Image from 'next/image';
-// import {  useState } from 'react';
 import { addToCart } from '@/reducers/cartSlice';
 import { useRouter } from 'next/navigation';
 import { removeFromLiked } from '@/reducers/likedSlice';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 
 function LikedProducts() {
     const dispatch = useDispatch<AppDispatch>()
+    const router = useRouter()
     const likedItems = useSelector((state: RootState) => state.liked.items)
     const productFilterName =  useSelector((state: RootState) => state.products.items)
-    const router = useRouter()
-   
     const [productsAllLiked, setProductsAllLiked] = useState(likedItems)
         
     function handleLike(product: number, e: React.MouseEvent<HTMLButtonElement>) {
         e.stopPropagation()
-        
         dispatch(removeFromLiked(product))
     }
 
     useEffect(() => {
       setProductsAllLiked((prev) =>
-            prev.map((productItem) =>
+            prev?.map((productItem) =>
                 productItem.category.slice(0, 3).includes(productFilterName)
                     ? { ...productItem, filter: true }
                     : { ...productItem, filter: false }
             )
         );
-    }, [productFilterName]); 
+        setProductsAllLiked(likedItems)
+    }, [productFilterName, likedItems]); 
     
     function handleAdd(product: ProductTypes, e: React.MouseEvent<HTMLButtonElement>) {
         e.stopPropagation();
-        console.log('likeee', product);
         dispatch(addToCart(product))
     }
 
   return (
     <div className='min-h-[95vh]'>
-      <h2 className="text-start text-[30px]  pt-[80px] pl-[30px] font-[600] mb-[20px]">Liked Products</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[20px] mb-[40px] px-[40px] ">
-          {productsAllLiked.map(item => item.filter && (
+      <h2 className="text-start text-[30px]  pt-[80px] pl-[30px] font-[600] mb-[10px]">Liked Products</h2>
+      <Link href={'/'} className='py-[10px] px-[15px] bg-[#e8e8e8] cursor-pointer rounded-[5px] inline-block mb-[20px] ml-[30px]'>Back to products</Link>
+      {likedItems.length ? <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[20px] mb-[40px] px-[40px] ">
+          {productsAllLiked.map(item =>  (
               <div key={item.id} onClick={() => router.push(`products/${item.id}`)}  className='border-[1px] relative rounded-[5px] p-[20px] '>
                   <div className='h-[200px] w-full flex justify-center py-[20px] items-center mb-[10px]'>
                       <Image src={item.image} alt={item.title} width={130} height={100}/>
@@ -60,12 +59,23 @@ function LikedProducts() {
                   <h2 className='font-[700] w-full mb-[7px] '>{item.title}</h2>
                   <p className='line-clamp-3 mb-[50px]'>{item.description}</p>
                   <div className='flex justify-between items-center left-0 right-0 px-[20px] absolute bottom-[20px]'>
-                      <h4 className='text-[#555]'>${item.price}</h4>
-                      <button onClick={(e) => handleAdd(item, e)} className='p-[5px] active:bg-[#5ed1ff] cursor-pointer text-[#fff] rounded-[5px] bg-[#00b7ff]'>Add to cart</button>
-                  </div>
+                    <h4 className='text-[#555]'>${item.price}</h4>
+                    <div className='flex gap-[6px]'>
+                        <button onClick={(e) => handleLike(item.id, e)} className="bg-[#888] p-[5px] text-white rounded-[5px]  cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 ">
+                                <path strokeLinecap="round"  strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        <button onClick={(e) => handleAdd(item, e)} className='p-[5px] active:bg-[#5ed1ff] cursor-pointer text-[#fff] rounded-[5px] bg-[#00b7ff]'>Add to cart</button>
+                    </div>
+                </div>
               </div>
           ))}
-      </div>
+      </div> : ''}
+      {!productsAllLiked.length && <div className="bg-[#999] w-[400px] mx-auto rounded-[30px] p-[20px]">
+        <h1 className="text-center text-[25px]" >There is not any liked products</h1>
+        <h1 className="text-[100px] text-center">☹️</h1>
+      </div>}
     </div>
   )
 }

@@ -2,11 +2,6 @@
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// const getData = async () => {
-//   const {data} = await axios.get('https://fakestoreapi.com/products');
-//   return data 
-// }
-
 interface ProdcutsAllTypes {
   items: string;
 }

@@ -1,69 +1,56 @@
 "use client"
 
-// import { ProductTypes } from "@/interface";
-// import { addProduct } from "@/reducers/addSlice";
-// import { AppDispatch } from "@/store/store";
+import { AddProductType } from "@/interface";
 import axios from "axios";
+import Link from "next/link";
 import { useState } from "react"
-// import { useDispatch } from "react-redux";
-
-interface AddProductType {
-    title: string
-    category: string
-    description: string
-    image: string
-    price: number
-    rate: number
-    count: number
-    liked: boolean
-    filter: boolean
-}
+import toast, { Toaster } from "react-hot-toast";
 
 export const addProductApi = async (product: AddProductType) => {
     await axios.put('https://67e38f432ae442db76d08ec2.mockapi.io/a-store-products', product);
 }
 
 function Addproduct() {
-    // const dispatch = useDispatch<AppDispatch>();
 
     const [product, setProduct] = useState<AddProductType>({
         title: "",
         description: "",
         image: "",
         category: "",
-        price: 0,
+        price: '',
         rate: 4.5,
         count: 130,
         liked: false,
         filter: false,
     });
 
-    // **Input maydonini yangilash**
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
 
         setProduct({
             ...product,
-            [name]: type === "number" ? parseFloat(value) || 0 : value, 
+            [name]: type === "string" ? parseFloat(value) || 0 : value, 
         });
     };
 
-    // **Mahsulot qo‘shish**
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
         try {
-            const response = await axios.post("https://67e38f432ae442db76d08ec2.mockapi.io/a-store-products", product);
+            const response = await axios.post("https://67e38f432ae442db76d08ec2.mockapi.io/a-store-products", {...product, price: Number(product.price)});
             console.log("Yangi mahsulot:", response.data);
         } catch (error) {
-            console.error("Mahsulot qo‘shishda xatolik:", error);
+            console.log(error);
         }
-        setProduct({ title: "", description: "", image: "", category: "", price: 0, rate: 4.5, count: 130, liked: false, filter: false});
+        setProduct({ title: "", description: "", image: "", category: "", price: '', rate: 4.5, count: 130, liked: false, filter: false});
+        alert('Profuct')
+        toast.success('Product added successfully')
     };
 
   return (
     <div className="px-[30px]  pt-[80px] min-h-[100vh]">
             <h1 className="text-center text-[30px] font-[600] mb-[20px]">Add new product</h1>
+            <Toaster position="top-center"   reverseOrder={false}/>
+            <Link href={'/'} className='py-[10px] px-[15px] bg-[#e8e8e8] cursor-pointer rounded-[5px]'>Back to products</Link>
             <form onSubmit={handleSubmit} className="border-[1px] max-w-[500px] flex flex-col gap-[10px] border-[#999] rounded-[10px] mx-auto p-[30px]">
                 <label htmlFor="title" className="w-full">
                     <span>Title:</span>

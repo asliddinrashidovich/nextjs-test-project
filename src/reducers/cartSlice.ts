@@ -1,4 +1,4 @@
-"use client"; // Redux client komponentda ishlaydi
+"use client";
 
 import { ProductTypes } from "@/interface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";

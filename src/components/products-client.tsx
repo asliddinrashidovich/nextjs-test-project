@@ -13,11 +13,7 @@ import { useDispatch } from 'react-redux'
 function ProductsClientSide({products}: {products: ProductTypes[]}) {
     const router = useRouter()
     const dispatch = useDispatch<AppDispatch>()
-
     const productFilterName =  useSelector((state: RootState) => state.products.items)
-
-    console.log(productFilterName)
-    
     const [productsAll, setProductsAll] = useState(products)
 
     useEffect(() => {
@@ -28,7 +24,6 @@ function ProductsClientSide({products}: {products: ProductTypes[]}) {
         }));
         setProductsAll(updatedProducts);
     }, [products])
-
 
     useEffect(() => {
         setProductsAll((prev) =>
@@ -65,12 +60,11 @@ function ProductsClientSide({products}: {products: ProductTypes[]}) {
         ))
     }
 
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4 gap-[20px] mb-[40px] px-[40px] ">
     {productsAll.map(item => item.filter && (
         <div key={item.id} onClick={() => router.push(`products/${item.id}`)}  className='border-[1px] relative rounded-[5px] p-[20px] '>
-            <div className='h-[200px] w-full flex justify-center py-[20px] items-center mb-[10px]'>
+            <div className='h-[200px] w-full flex justify-center py-[20px] cursor-pointer items-center mb-[10px]'>
                 <Image src={item.image} alt={item.title} width={130} height={100}/>
                 <button className='cursor-pointer absolute w-[full] px-[5px] rounded-bl-[5px] h-[20px] flex justify-center items-center top-4 right-2' onClick={(e) => handleLike(item, e)}>
                     {!item.liked && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">

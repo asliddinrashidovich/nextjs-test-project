@@ -21,9 +21,9 @@ export const likedSlice = createSlice({
     addToLiked: (state, action: PayloadAction<ProductTypes>) => {
       const existsIndex = state.items.findIndex((item) => item.id === action.payload.id);
       if (existsIndex !== -1) {
-        state.items.splice(existsIndex, 1); // Mahsulotni o‘chirib tashlaydi
+        state.items.splice(existsIndex, 1);
       } else {
-        state.items.push(action.payload); // Yangi mahsulot qo‘shadi
+        state.items.push(action.payload); 
       }
     },
     removeFromLiked: (state, action: PayloadAction<number>) => {
