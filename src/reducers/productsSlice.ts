@@ -24,12 +24,6 @@ export const productsSliceAll = createSlice({
       console.log('asda', action.payload)
       state.items = action.payload;
     },
-    // filterByCategory: (state, action: PayloadAction<string>) => {
-    //   state.items = state.items.filter((item) => item.category === action.payload);
-    // },
-    // removeFromLiked: (state, action: PayloadAction<number>) => {
-    //   state.items = state.items.filter((item) => item.id !== action.payload);
-    // },
   },
 });
 

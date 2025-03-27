@@ -3,7 +3,7 @@ import axios from 'axios'
 import ProductsClientSide from './products-client';
 
 const getData = async () => {
-  const {data} = await axios.get('https://fakestoreapi.com/products');
+  const {data} = await axios.get('https://67e38f432ae442db76d08ec2.mockapi.io/a-store-products');
   return data 
 }
 

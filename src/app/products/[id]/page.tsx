@@ -38,11 +38,11 @@ async function ProductDetails({params}: {params: {id: string}}) {
                         </tr>
                         <tr>
                             <th className='min-w-[150px] text-start'>Count of sold :</th>
-                            <td>{product.rating.count}</td>
+                            <td>{product.count}</td>
                         </tr>
                         <tr>
                             <th className='min-w-[150px] text-start'>Rate:</th>
-                            <td>{product.rating.rate}</td>
+                            <td>{product.rate}</td>
                         </tr>
                     </tbody>
                 </table><hr className='border-[#999]'/>
