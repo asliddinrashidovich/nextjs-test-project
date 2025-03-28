@@ -6,10 +6,6 @@ import Link from "next/link";
 import { useState } from "react"
 import toast, { Toaster } from "react-hot-toast";
 
-export const addProductApi = async (product: AddProductType) => {
-    await axios.put('https://67e38f432ae442db76d08ec2.mockapi.io/a-store-products', product);
-}
-
 function Addproduct() {
 
     const [product, setProduct] = useState<AddProductType>({
